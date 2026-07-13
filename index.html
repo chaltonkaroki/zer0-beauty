@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>zer0 Lashes & Nails</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,7 +33,7 @@
                 </div>
                 <div class="stat-item">
                     <i class="fa-solid fa-users"></i>
-                    <span id="home-queue-count">3 in queue</span>
+                    <span id="home-queue-count">Loading...</span>
                 </div>
             </div>
         </section>
@@ -162,108 +163,7 @@
         </div>
     </div>
 
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxsGFeNu7j3znv_IhmkvCDb5NPTBriVAeHVbXBxkSv3MqCzlqaVqKwJtEPcXnUlwxjDaA/exec';
-        
-        // --- TAB NAVIGATION ---
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-            // Find nav button by index or attribute - simplified here:
-            const navIndex = ['home', 'queue', 'book'].indexOf(tabName);
-            document.querySelectorAll('.nav-item')[navIndex].classList.add('active');
-            
-            if(tabName === 'queue') loadQueue();
-        }
-
-        // --- FORM SUBMISSION ---
-        const form = document.forms['submit-to-google-sheet'];
-        const msg = document.getElementById("msg");
-        
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const btn = form.querySelector('.submit-btn');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
-            
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(() => {
-                    msg.innerHTML = "✨ Booking Confirmed!";
-                    msg.style.color = "#4caf50";
-                    form.reset();
-                    setTimeout(() => { msg.innerHTML = ""; btn.innerHTML = "Confirm Booking"; }, 4000);
-                    loadQueue();
-                })
-                .catch(err => {
-                    msg.innerHTML = "⚠️ Error. Try again.";
-                    msg.style.color = "#e74c3c";
-                    btn.innerHTML = "Confirm Booking";
-                });
-        });
-
-        // --- QUEUE LOGIC ---
-        function loadQueue() {
-            fetch(scriptURL)
-                .then(res => res.json())
-                .then(data => {
-                    const list = document.getElementById('waiting-list');
-                    const count = data.length || 0;
-                    
-                    // Update Home Stats
-                    document.getElementById('home-queue-count').textContent = `${count} in queue`;
-                    document.getElementById('adm-total').textContent = count;
-                    document.getElementById('adm-queue').textContent = count;
-
-                    if (count === 0) {
-                        list.innerHTML = '<li class="empty">No one waiting. Walk-ins welcome!</li>';
-                    } else {
-                        list.innerHTML = data.map((p, i) => `
-                            <li style="animation-delay: ${i * 0.05}s">
-                                <div class="person-info">
-                                    <span class="num">#${i + 1}</span>
-                                    <span class="name">${p.name}</span>
-                                </div>
-                                <span class="svc">${p.service}</span>
-                            </li>`).join('');
-                    }
-                })
-                .catch(() => {
-                    document.getElementById('waiting-list').innerHTML = '<li class="error">Connection lost</li>';
-                });
-        }
-
-        // --- OWNER FUNCTIONS ---
-        function promptAdminPassword() {
-            if(prompt("Owner Access:") === 'zer0beauty2026') {
-                document.getElementById('owner-modal').classList.add('open');
-                loadQueue(); // Refresh stats for admin
-            }
-        }
-        
-        function closeModal() {
-            document.getElementById('owner-modal').classList.remove('open');
-        }
-
-        function updateLiveStatus() {
-            const c = document.getElementById('adm-cur').value;
-            const n = document.getElementById('adm-nxt').value;
-            const w = document.getElementById('adm-wait').value;
-            
-            if(c) document.getElementById('q-current').textContent = c;
-            if(n) document.getElementById('q-next').textContent = n;
-            if(w) {
-                document.getElementById('home-wait-time').textContent = w;
-                // Note: In a real app, you'd save this to sheet too
-            }
-            
-            alert("Board Updated!");
-            closeModal();
-        }
-
-        // Init
-        setInterval(loadQueue, 30000);
-        loadQueue();
-    </script>
+    <!-- Link to external JS file -->
+    <script src="script.js"></script>
 </body>
 </html>
