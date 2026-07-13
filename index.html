@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zer0 Lashes & Nails | Book Your Service</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for a premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Book Your Beauty Service</h1>
+    </header>
+
+    <main class="container">
+        <!-- Payment Info Card -->
+        <div class="payment-card">
+            <div class="payment-item">
+                <span class="icon">💰</span>
+                <div>
+                    <strong>M-Pesa Till Number:</strong>
+                    <p class="number">123456</p>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="payment-item">
+                <span class="icon">📱</span>
+                <div>
+                    <strong>Airtel Paybill:</strong>
+                    <p class="number">789012</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form -->
+        <form class="booking-form" id="bookingForm">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" placeholder="Enter your phone number" required>
+            </div>
+
+            <div class="form-group">
+                <label>Service</label>
+                <select required>
+                    <option value="" disabled selected>Select a service</option>
+                    <option value="eyelashing">Eyelashing</option>
+                    <option value="eyebrows">Eyebrow Painting</option>
+                    <option value="manicure">Manicure</option>
+                    <option value="pedicure">Pedicure</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Transaction Code</label>
+                <input type="text" placeholder="Enter M-Pesa/Airtel confirmation code" required>
+            </div>
+
+            <button type="submit">Submit Booking</button>
+        </form>
+    </main>
+
+    <script>
+        // Simple script to handle form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you! Your booking request has been received. We will confirm via WhatsApp shortly.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
