@@ -1,257 +1,343 @@
-/* Reset and Base Styles */
+/* =========================================
+   zer0 Lashes & Nails - Premium Beauty Theme
+   ========================================= */
+
+/* --- CSS Variables for Consistent Branding --- */
+:root {
+  --color-bg: #fdfbf7;
+  --color-primary: #6a1b9a;       /* Deep violet */
+  --color-secondary: #ff9a9e;     /* Soft pink */
+  --color-accent: #e0c3fc;        /* Light violet */
+  --color-text: #2d2d2d;
+  --color-text-light: #666;
+  --color-white: #ffffff;
+  --shadow-soft: 0 8px 32px rgba(106, 27, 154, 0.08);
+  --shadow-hover: 0 12px 40px rgba(106, 27, 154, 0.15);
+  --radius-card: 16px;
+  --radius-input: 10px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Reset & Base --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Updated Body with Background Graphic */
-body { 
-    font-family: 'Lato', sans-serif; 
-    background-color: #fdfbf7;
-    /* Soft geometric polka-dot pattern using brand colors */
-    background-image: 
-        radial-gradient(#e0c3fc 1px, transparent 1px),
-        radial-gradient(#ff9a9e 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: 0 0, 20px 20px;
-    color: #333;
-    min-height: 100vh;
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(224, 195, 252, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 154, 158, 0.2) 0%, transparent 50%);
+  color: var(--color-text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Hero Section - Pink & Violet Gradient */
+/* --- Hero Section --- */
 .hero {
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #e0c3fc 100%);
-    padding: 60px 20px;
-    text-align: center;
-    color: white;
-    border-bottom: 4px solid #d8b4e2; /* Soft violet accent line */
+  background: linear-gradient(135deg, var(--color-secondary) 0%, #fecfef 50%, var(--color-accent) 100%);
+  padding: 80px 20px 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: var(--color-bg);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
 .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: var(--color-white);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  letter-spacing: 0.5px;
+  animation: fadeInDown 0.8s ease-out;
 }
 
-/* Main Container */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Main Container --- */
 .container {
-    max-width: 500px;
-    margin: -30px auto 40px; /* Pulls card up into header */
-    padding: 0 20px;
+  max-width: 520px;
+  margin: -40px auto 60px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
 }
 
-/* Payment Card */
+/* --- Glassmorphism Card Base --- */
+.payment-card,
+.queue-status-card,
+.queue-list-card,
+.booking-form {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+  animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.payment-card:hover,
+.queue-status-card:hover,
+.queue-list-card:hover,
+.booking-form:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered animation delays */
+.payment-card { animation-delay: 0.1s; }
+.queue-status-card { animation-delay: 0.2s; }
+.queue-list-card { animation-delay: 0.3s; }
+.booking-form { animation-delay: 0.4s; }
+
+/* --- Payment Card --- */
 .payment-card {
-    background: white;
-    border-radius: 12px;
-    padding: 25px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 10px 25px rgba(224, 195, 252, 0.3); /* Violet-tinted shadow */
-    margin-bottom: 30px;
-    border-top: 3px solid #ff9a9e; /* Pink top border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 3px solid var(--color-secondary);
 }
-.payment-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-align: left;
-}
-.icon { font-size: 2rem; }
-.number { color: #d8b4e2; font-weight: bold; font-size: 1.1rem; margin-top: 2px; }
-.divider { width: 1px; height: 40px; background: #eee; }
 
-/* Live Queue Status Card */
+.payment-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon { font-size: 2.2rem; }
+
+.number {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* --- Queue Status Card --- */
 .queue-status-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 15px rgba(224, 195, 252, 0.2);
-    border-left: 4px solid #6a1b9a; /* Violet accent */
+  border-left: 4px solid var(--color-primary);
 }
 
 .queue-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #f3e5f5;
-    padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(106, 27, 154, 0.1);
 }
 
 .queue-header h3 {
-    font-family: 'Lato', sans-serif;
-    font-size: 1rem;
-    color: #333;
-    margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin: 0;
 }
 
-/* Pulsing Green Dot for "Live" effect */
 .pulse-dot {
-    width: 10px;
-    height: 10px;
-    background-color: #4caf50;
-    border-radius: 50%;
-    box-shadow: 0 0 0 rgba(76, 175, 80, 0.4);
-    animation: pulse 2s infinite;
+  width: 10px;
+  height: 10px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
 }
 
 .queue-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
-.queue-item {
-    display: flex;
-    flex-direction: column;
-}
+.queue-item { display: flex; flex-direction: column; }
 
 .queue-item.highlight {
-    grid-column: span 2; /* Makes wait time full width */
-    background-color: #fdfbf7;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(224, 195, 252, 0.2), rgba(255, 154, 158, 0.15));
+  padding: 14px;
+  border-radius: var(--radius-input);
+  text-align: center;
 }
 
 .queue-item .label {
-    font-size: 0.75rem;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  font-size: 0.7rem;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .queue-item .value {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #6a1b9a;
-    margin-top: 4px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 4px;
 }
 
 .queue-note {
-    font-size: 0.7rem;
-    color: #aaa;
-    text-align: center;
-    margin-top: 15px;
-    font-style: italic;
+  font-size: 0.7rem;
+  color: #aaa;
+  text-align: center;
+  margin-top: 16px;
+  font-style: italic;
 }
 
-/* Waiting List Card */
+/* --- Waiting List Card --- */
 .queue-list-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 15px rgba(224, 195, 252, 0.2);
-    border-left: 4px solid #ff9a9e; /* Pink accent */
+  border-left: 4px solid var(--color-secondary);
 }
 
 .queue-list-card h3 {
-    font-family: 'Lato', sans-serif;
-    font-size: 1rem;
-    color: #333;
-    margin: 0 0 15px 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin: 0 0 16px 0;
 }
 
-.waiting-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+.waiting-list { list-style: none; }
 
 .waiting-list li {
-    padding: 10px 0;
-    border-bottom: 1px solid #f3e5f5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.95rem;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(106, 27, 154, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  transition: var(--transition);
 }
 
-.waiting-list li:last-child {
-    border-bottom: none;
+.waiting-list li:last-child { border-bottom: none; }
+
+.waiting-list li:hover {
+  background: rgba(224, 195, 252, 0.1);
+  padding-left: 8px;
+  border-radius: 6px;
 }
 
 .person-name {
-    font-weight: bold;
-    color: #6a1b9a;
+  font-weight: 700;
+  color: var(--color-primary);
 }
 
 .person-service {
-    color: #888;
-    font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-size: 0.85rem;
 }
 
 .loading-item, .empty-item, .error-item {
-    text-align: center;
-    color: #aaa;
-    font-style: italic;
-    padding: 15px 0;
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+  padding: 20px 0;
 }
 
-/* Form Styling */
+/* --- Booking Form --- */
 .booking-form {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(224, 195, 252, 0.2);
-    border: 1px solid #f3e5f5;
+  border: 1px solid rgba(106, 27, 154, 0.1);
 }
-.form-group { margin-bottom: 20px; }
-label { 
-    display: block; 
-    font-weight: bold; 
-    margin-bottom: 8px; 
-    color: #6a1b9a; /* Deep violet label */
-    font-size: 0.9rem;
+
+.form-group { margin-bottom: 22px; }
+
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
+
 input, select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e1bee7; /* Light violet border */
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: all 0.3s;
-    background-color: #fafafa;
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid rgba(225, 190, 231, 0.5);
+  border-radius: var(--radius-input);
+  font-size: 1rem;
+  font-family: 'Lato', sans-serif;
+  transition: var(--transition);
+  background-color: rgba(250, 250, 250, 0.8);
 }
+
 input:focus, select:focus {
-    outline: none;
-    border-color: #ff9a9e; /* Pink focus */
-    box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.2);
-    background-color: white;
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 4px rgba(255, 154, 158, 0.15);
+  background-color: var(--color-white);
 }
 
-/* Submit Button - Violet to Pink Gradient */
 button {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #e0c3fc 0%, #ff9a9e 100%);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 15px rgba(224, 195, 252, 0.4);
-}
-button:hover { 
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 154, 158, 0.5);
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-input);
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Lato', sans-serif;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 16px rgba(255, 154, 158, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-/* Mobile Responsiveness */
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(255, 154, 158, 0.45);
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+
+#msg {
+  text-align: center;
+  margin-top: 14px;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-height: 1.4em;
+}
+
+/* --- Mobile Responsiveness --- */
 @media (max-width: 480px) {
-    .hero h1 { font-size: 1.8rem; }
-    .payment-card { flex-direction: column; gap: 15px; }
-    .divider { width: 80%; height: 1px; }
+  .hero { padding: 60px 16px 80px; }
+  .hero h1 { font-size: 2.2rem; }
+  .container { margin-top: -30px; padding: 0 16px; }
+  .payment-card,
+  .queue-status-card,
+  .queue-list-card,
+  .booking-form { padding: 22px; }
+  .queue-grid { gap: 12px; }
+  .queue-item .value { font-size: 1.05rem; }
 }
