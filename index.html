@@ -2,253 +2,268 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zer0 Lashes & Nails | Book Your Service</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zer0 Lashes & Nails</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for a premium look -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <header class="hero">
-        <h1>Book Your Beauty Service</h1>
-    </header>
-
-    <main class="container">
-        <!-- Payment Info Card -->
-        <div class="payment-card" style="justify-content: center;">
-            <div class="payment-item">
-                <span class="icon">🏦</span>
-                <div>
-                    <strong>Equity Bank Paybill:</strong>
-                    <p class="number">247247</p>
-                    <small style="color:#666; font-size:0.8rem;">Account No: 0790184581455</small>
-                </div>
-            </div>
-        </div>
-
-        <!-- Live Queue Status Section -->
-        <div class="queue-status-card">
-            <div class="queue-header">
-                <span class="pulse-dot"></span>
-                <h3>Live Service Status</h3>
+    <!-- Main Content Area -->
+    <main id="app-content">
+        
+        <!-- HOME TAB -->
+        <section id="tab-home" class="tab active">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <span class="brand-tag">PREMIUM BEAUTY STUDIO</span>
+                <h1>zer0<br><em>Lashes & Nails</em></h1>
+                <p>Elevate your beauty ritual with our signature services.</p>
+                <button class="cta-btn" onclick="switchTab('book')">Book Appointment</button>
             </div>
             
-            <div class="queue-grid">
-                <div class="queue-item">
-                    <span class="label">Currently Serving:</span>
-                    <span class="value" id="current-service">Eyelashing</span>
+            <!-- Quick Stats Overlay -->
+            <div class="stats-overlay">
+                <div class="stat-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="home-wait-time">~45 min wait</span>
                 </div>
-                <div class="queue-item">
-                    <span class="label">Next in Line:</span>
-                    <span class="value" id="next-service">Manicure</span>
-                </div>
-                <div class="queue-item highlight">
-                    <span class="label">Est. Wait Time:</span>
-                    <span class="value" id="wait-time">~45 mins</span>
+                <div class="stat-item">
+                    <i class="fa-solid fa-users"></i>
+                    <span id="home-queue-count">3 in queue</span>
                 </div>
             </div>
-            <p class="queue-note">*Updated in real-time from our booking system</p>
-        </div>
+        </section>
 
-        <!-- Who's Waiting List -->
-        <div class="queue-list-card">
-            <h3>👥 Currently Waiting</h3>
-            <ul id="waiting-list" class="waiting-list">
-                <li class="loading-item">Loading live queue...</li>
+        <!-- QUEUE TAB -->
+        <section id="tab-queue" class="tab">
+            <div class="section-header">
+                <h2>Live Status</h2>
+                <div class="live-indicator"><span class="dot"></span> Real-time</div>
+            </div>
+            
+            <div class="status-card main-status">
+                <div class="status-row">
+                    <span class="label">NOW SERVING</span>
+                    <span class="value highlight" id="q-current">Eyelashing</span>
+                </div>
+                <div class="divider"></div>
+                <div class="status-row">
+                    <span class="label">NEXT UP</span>
+                    <span class="value" id="q-next">Manicure</span>
+                </div>
+            </div>
+
+            <h3 class="list-title">Waiting List</h3>
+            <ul id="waiting-list" class="modern-list">
+                <li class="skeleton">Loading live data...</li>
             </ul>
-        </div>
+        </section>
 
-        <!-- Booking Form -->
-        <form class="booking-form" name="submit-to-google-sheet">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" name="Name" placeholder="Enter your name" required>
+        <!-- BOOK TAB -->
+        <section id="tab-book" class="tab">
+            <div class="section-header">
+                <h2>New Booking</h2>
+                <p>Secure your spot today</p>
             </div>
 
-            <div class="form-group">
-                <label>Phone</label>
-                <input type="tel" name="Phone" placeholder="Enter your phone number" required>
-            </div>
+            <form class="modern-form" name="submit-to-google-sheet">
+                <div class="input-group">
+                    <label>Your Name</label>
+                    <input type="text" name="Name" placeholder="e.g. Sarah M." required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="Phone" placeholder="07XX XXX XXX" required>
+                </div>
 
-            <div class="form-group">
-                <label>Service</label>
-                <select name="Service" required>
-                    <option value="" disabled selected>Select a service</option>
-                    <option value="Eyelashing">Eyelashing</option>
-                    <option value="Eyebrows">Eyebrow Painting</option>
-                    <option value="Manicure">Manicure</option>
-                    <option value="Pedicure">Pedicure</option>
-                </select>
-            </div>
+                <div class="input-group">
+                    <label>Select Service</label>
+                    <div class="service-grid">
+                        <label class="service-option">
+                            <input type="radio" name="Service" value="Eyelashing" required>
+                            <span class="service-card">
+                                <i class="fa-regular fa-eye"></i>
+                                Eyelashing
+                            </span>
+                        </label>
+                        <label class="service-option">
+                            <input type="radio" name="Service" value="Eyebrows">
+                            <span class="service-card">
+                                <i class="fa-solid fa-paintbrush"></i>
+                                Brows
+                            </span>
+                        </label>
+                        <label class="service-option">
+                            <input type="radio" name="Service" value="Manicure">
+                            <span class="service-card">
+                                <i class="fa-solid fa-hand-sparkles"></i>
+                                Manicure
+                            </span>
+                        </label>
+                        <label class="service-option">
+                            <input type="radio" name="Service" value="Pedicure">
+                            <span class="service-card">
+                                <i class="fa-solid fa-shoe-prints"></i>
+                                Pedicure
+                            </span>
+                        </label>
+                    </div>
+                </div>
 
-            <button type="submit">Submit Booking</button>
-            <p id="msg" style="text-align:center; margin-top:10px; color:#6a1b9a; font-weight:bold;"></p>
-        </form>
+                <button type="submit" class="submit-btn">Confirm Booking</button>
+                <p id="msg" class="form-msg"></p>
+            </form>
+        </section>
+
     </main>
 
-    <!-- Hidden Owner Section -->
-    <div id="owner-section" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(253,251,247,0.98); z-index:1000; overflow-y:auto; padding:20px;">
-        <div class="container" style="margin-top:20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2 style="color:#6a1b9a; font-family:'Playfair Display',serif;"> Owner Dashboard</h2>
-                <button onclick="document.getElementById('owner-section').style.display='none'" style="width:auto; padding:8px 16px; font-size:0.9rem;">Close ✕</button>
-            </div>
+    <!-- Floating Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('home')">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('queue')">
+            <i class="fa-solid fa-list-ol"></i>
+            <span>Queue</span>
+        </button>
+        <button class="nav-item primary" onclick="switchTab('book')">
+            <i class="fa-solid fa-calendar-plus"></i>
+            <span>Book</span>
+        </button>
+    </nav>
 
-            <!-- Quick Stats -->
-            <div class="queue-grid" style="margin-bottom:20px;">
-                <div class="queue-item highlight">
-                    <span class="label">Total Bookings Today</span>
-                    <span class="value" id="total-bookings">0</span>
-                </div>
-                <div class="queue-item highlight">
-                    <span class="label">Current Queue Length</span>
-                    <span class="value" id="queue-length">0</span>
-                </div>
-            </div>
+    <!-- Hidden Owner Trigger -->
+    <button onclick="promptAdminPassword()" class="admin-trigger"><i class="fa-solid fa-gear"></i></button>
 
-            <!-- Manage Live Status -->
-            <div class="booking-form" style="margin-bottom:20px;">
-                <h3 style="color:#6a1b9a; margin-bottom:15px;">Update Live Status</h3>
-                <div class="form-group">
-                    <label>Currently Serving:</label>
-                    <input type="text" id="admin-current" placeholder="e.g., Eyelashing">
-                </div>
-                <div class="form-group">
-                    <label>Next in Line:</label>
-                    <input type="text" id="admin-next" placeholder="e.g., Manicure">
-                </div>
-                <div class="form-group">
-                    <label>Est. Wait Time:</label>
-                    <input type="text" id="admin-wait" placeholder="e.g., ~45 mins">
-                </div>
-                <button onclick="updateLiveStatus()" style="margin-top:10px;">Update Status Board</button>
+    <!-- Owner Dashboard Modal -->
+    <div id="owner-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Owner Dashboard</h3>
+                <button onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <!-- Recent Bookings Table -->
-            <div class="booking-form">
-                <h3 style="color:#6a1b9a; margin-bottom:15px;">Recent Bookings</h3>
-                <div style="overflow-x:auto;">
-                    <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
-                        <thead>
-                            <tr style="border-bottom:2px solid #e1bee7; text-align:left;">
-                                <th style="padding:8px;">Time</th>
-                                <th style="padding:8px;">Name</th>
-                                <th style="padding:8px;">Service</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bookings-table-body">
-                            <tr><td colspan="3" style="padding:15px; text-align:center; color:#aaa;">Loading...</td></tr>
-                        </tbody>
-                    </table>
+            <div class="modal-body">
+                <div class="admin-stats">
+                    <div class="mini-stat"><b id="adm-total">0</b><small>Bookings</small></div>
+                    <div class="mini-stat"><b id="adm-queue">0</b><small>Waiting</small></div>
+                </div>
+                <div class="admin-controls">
+                    <input type="text" id="adm-cur" placeholder="Currently Serving...">
+                    <input type="text" id="adm-nxt" placeholder="Next In Line...">
+                    <input type="text" id="adm-wait" placeholder="Wait Time (e.g. 30m)">
+                    <button onclick="updateLiveStatus()" class="admin-save">Update Board</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Secret Admin Trigger Button -->
-    <button onclick="promptAdminPassword()" style="position:fixed; bottom:10px; right:10px; width:30px; height:30px; border-radius:50%; background:#6a1b9a; color:white; border:none; cursor:pointer; opacity:0.3; font-size:12px;" title="Owner Login">️</button>
-
     <script>
-        // YOUR DEPLOYMENT URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxsGFeNu7j3znv_IhmkvCDb5NPTBriVAeHVbXBxkSv3MqCzlqaVqKwJtEPcXnUlwxjDaA/exec'
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxsGFeNu7j3znv_IhmkvCDb5NPTBriVAeHVbXBxkSv3MqCzlqaVqKwJtEPcXnUlwxjDaA/exec';
         
-        const form = document.forms['submit-to-google-sheet']
-        const msg = document.getElementById("msg")
+        // --- TAB NAVIGATION ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            // Find nav button by index or attribute - simplified here:
+            const navIndex = ['home', 'queue', 'book'].indexOf(tabName);
+            document.querySelectorAll('.nav-item')[navIndex].classList.add('active');
+            
+            if(tabName === 'queue') loadQueue();
+        }
 
-        // Handle Form Submission
+        // --- FORM SUBMISSION ---
+        const form = document.forms['submit-to-google-sheet'];
+        const msg = document.getElementById("msg");
+        
         form.addEventListener('submit', e => {
-            e.preventDefault()
-            msg.innerHTML = " Sending booking..."
+            e.preventDefault();
+            const btn = form.querySelector('.submit-btn');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
             
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    msg.innerHTML = "✅ Booking Confirmed! We'll contact you soon."
-                    form.reset()
-                    setTimeout(() => msg.innerHTML = "", 5000)
-                    loadQueue(); // Refresh queue immediately after booking
+                .then(() => {
+                    msg.innerHTML = "✨ Booking Confirmed!";
+                    msg.style.color = "#4caf50";
+                    form.reset();
+                    setTimeout(() => { msg.innerHTML = ""; btn.innerHTML = "Confirm Booking"; }, 4000);
+                    loadQueue();
                 })
-                .catch(error => {
-                    msg.innerHTML = "❌ Error! Please try again or WhatsApp us."
-                    console.error('Error!', error.message)
-                })
-        })
+                .catch(err => {
+                    msg.innerHTML = "⚠️ Error. Try again.";
+                    msg.style.color = "#e74c3c";
+                    btn.innerHTML = "Confirm Booking";
+                });
+        });
 
-        // Load Waiting List Function
+        // --- QUEUE LOGIC ---
         function loadQueue() {
-            const listEl = document.getElementById('waiting-list');
-            listEl.innerHTML = '<li class="loading-item">Updating queue...</li>';
-            
             fetch(scriptURL)
                 .then(res => res.json())
                 .then(data => {
-                    if (!data || data.length === 0) {
-                        listEl.innerHTML = '<li class="empty-item">No one is currently waiting! 🎉</li>';
+                    const list = document.getElementById('waiting-list');
+                    const count = data.length || 0;
+                    
+                    // Update Home Stats
+                    document.getElementById('home-queue-count').textContent = `${count} in queue`;
+                    document.getElementById('adm-total').textContent = count;
+                    document.getElementById('adm-queue').textContent = count;
+
+                    if (count === 0) {
+                        list.innerHTML = '<li class="empty">No one waiting. Walk-ins welcome!</li>';
                     } else {
-                        listEl.innerHTML = data.map(person => 
-                            `<li><span class="person-name">${person.name}</span> <span class="person-service">→ ${person.service}</span></li>`
-                        ).join('');
+                        list.innerHTML = data.map((p, i) => `
+                            <li style="animation-delay: ${i * 0.05}s">
+                                <div class="person-info">
+                                    <span class="num">#${i + 1}</span>
+                                    <span class="name">${p.name}</span>
+                                </div>
+                                <span class="svc">${p.service}</span>
+                            </li>`).join('');
                     }
                 })
-                .catch(err => {
-                    console.error('Queue fetch error:', err);
-                    listEl.innerHTML = '<li class="error-item">Unable to load queue.</li>';
+                .catch(() => {
+                    document.getElementById('waiting-list').innerHTML = '<li class="error">Connection lost</li>';
                 });
         }
 
-        // OWNER SECTION FUNCTIONS
+        // --- OWNER FUNCTIONS ---
         function promptAdminPassword() {
-            const password = prompt("Enter Owner Password:");
-            // Change 'zer0beauty2026' to your own secure password
-            if (password === 'zer0beauty2026') {
-                document.getElementById('owner-section').style.display = 'block';
-                loadAdminData();
-            } else if (password !== null) {
-                alert("Incorrect password!");
+            if(prompt("Owner Access:") === 'zer0beauty2026') {
+                document.getElementById('owner-modal').classList.add('open');
+                loadQueue(); // Refresh stats for admin
             }
         }
-
-        function loadAdminData() {
-            fetch(scriptURL)
-                .then(res => res.json())
-                .then(data => {
-                    // Update stats
-                    document.getElementById('total-bookings').textContent = data.length;
-                    document.getElementById('queue-length').textContent = data.length;
-                    
-                    // Populate table
-                    const tbody = document.getElementById('bookings-table-body');
-                    if (data.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="3" style="padding:15px; text-align:center; color:#aaa;">No bookings yet today</td></tr>';
-                    } else {
-                        tbody.innerHTML = data.map(b => 
-                            `<tr style="border-bottom:1px solid #f3e5f5;">
-                                <td style="padding:8px; color:#888; font-size:0.8rem;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
-                                <td style="padding:8px; font-weight:bold; color:#6a1b9a;">${b.name}</td>
-                                <td style="padding:8px;">${b.service}</td>
-                            </tr>`
-                        ).join('');
-                    }
-                })
-                .catch(err => console.error('Admin load error:', err));
+        
+        function closeModal() {
+            document.getElementById('owner-modal').classList.remove('open');
         }
 
         function updateLiveStatus() {
-            const current = document.getElementById('admin-current').value;
-            const next = document.getElementById('admin-next').value;
-            const wait = document.getElementById('admin-wait').value;
+            const c = document.getElementById('adm-cur').value;
+            const n = document.getElementById('adm-nxt').value;
+            const w = document.getElementById('adm-wait').value;
             
-            if(current) document.getElementById('current-service').textContent = current;
-            if(next) document.getElementById('next-service').textContent = next;
-            if(wait) document.getElementById('wait-time').textContent = wait;
+            if(c) document.getElementById('q-current').textContent = c;
+            if(n) document.getElementById('q-next').textContent = n;
+            if(w) {
+                document.getElementById('home-wait-time').textContent = w;
+                // Note: In a real app, you'd save this to sheet too
+            }
             
-            alert("✅ Live status updated for all clients!");
-            document.getElementById('owner-section').style.display = 'none';
+            alert("Board Updated!");
+            closeModal();
         }
 
-        // Initial Load & Auto-Refresh every 60 seconds
+        // Init
+        setInterval(loadQueue, 30000);
         loadQueue();
-        setInterval(loadQueue, 60000);
     </script>
 </body>
 </html>
