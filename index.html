@@ -18,7 +18,7 @@
         <!-- Payment Info Card -->
         <div class="payment-card" style="justify-content: center;">
             <div class="payment-item">
-                <span class="icon">🏦</span>
+                <span class="icon"></span>
                 <div>
                     <strong>Equity Bank Paybill:</strong>
                     <p class="number">247247</p>
@@ -51,6 +51,14 @@
             <p class="queue-note">*Updated in real-time from our booking system</p>
         </div>
 
+        <!-- Who's Waiting List -->
+        <div class="queue-list-card">
+            <h3>👥 Currently Waiting</h3>
+            <ul id="waiting-list" class="waiting-list">
+                <li class="loading-item">Loading live queue...</li>
+            </ul>
+        </div>
+
         <!-- Booking Form -->
         <form class="booking-form" name="submit-to-google-sheet">
             <div class="form-group">
@@ -80,10 +88,13 @@
     </main>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwxL2HQG-diw8v1dpI6mg1hpANolH0BIcuV-xARI54uEfn7aQPQ0C4Rb8BE4AA22GWOrw/exec'
+        // YOUR NEW DEPLOYMENT URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxsGFeNu7j3znv_IhmkvCDb5NPTBriVAeHVbXBxkSv3MqCzlqaVqKwJtEPcXnUlwxjDaA/exec'
+        
         const form = document.forms['submit-to-google-sheet']
         const msg = document.getElementById("msg")
 
+        // Handle Form Submission
         form.addEventListener('submit', e => {
             e.preventDefault()
             msg.innerHTML = " Sending booking..."
@@ -93,14 +104,39 @@
                     msg.innerHTML = "✅ Booking Confirmed! We'll contact you soon."
                     form.reset()
                     setTimeout(() => msg.innerHTML = "", 5000)
+                    loadQueue(); // Refresh queue immediately after booking
                 })
                 .catch(error => {
                     msg.innerHTML = "❌ Error! Please try again or WhatsApp us."
                     console.error('Error!', error.message)
                 })
         })
+
+        // Load Waiting List Function
+        function loadQueue() {
+            const listEl = document.getElementById('waiting-list');
+            listEl.innerHTML = '<li class="loading-item">Updating queue...</li>';
+            
+            fetch(scriptURL)
+                .then(res => res.json())
+                .then(data => {
+                    if (!data || data.length === 0) {
+                        listEl.innerHTML = '<li class="empty-item">No one is currently waiting! 🎉</li>';
+                    } else {
+                        listEl.innerHTML = data.map(person => 
+                            `<li><span class="person-name">${person.name}</span> <span class="person-service">→ ${person.service}</span></li>`
+                        ).join('');
+                    }
+                })
+                .catch(err => {
+                    console.error('Queue fetch error:', err);
+                    listEl.innerHTML = '<li class="error-item">Unable to load queue.</li>';
+                });
+        }
+
+        // Initial Load & Auto-Refresh every 60 seconds
+        loadQueue();
+        setInterval(loadQueue, 60000);
     </script>
-</body>
-</html>
 </body>
 </html>
