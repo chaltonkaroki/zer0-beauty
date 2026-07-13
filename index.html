@@ -27,6 +27,30 @@
             </div>
         </div>
 
+        <!-- Live Queue Status Section -->
+        <div class="queue-status-card">
+            <div class="queue-header">
+                <span class="pulse-dot"></span>
+                <h3>Live Service Status</h3>
+            </div>
+            
+            <div class="queue-grid">
+                <div class="queue-item">
+                    <span class="label">Currently Serving:</span>
+                    <span class="value" id="current-service">Eyelashing</span>
+                </div>
+                <div class="queue-item">
+                    <span class="label">Next in Line:</span>
+                    <span class="value" id="next-service">Manicure</span>
+                </div>
+                <div class="queue-item highlight">
+                    <span class="label">Est. Wait Time:</span>
+                    <span class="value" id="wait-time">~45 mins</span>
+                </div>
+            </div>
+            <p class="queue-note">*Updated in real-time from our booking system</p>
+        </div>
+
         <!-- Booking Form -->
         <form class="booking-form" name="submit-to-google-sheet">
             <div class="form-group">
