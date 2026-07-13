@@ -29,44 +29,59 @@
         </div>
 
         <!-- Booking Form -->
-        <form class="booking-form" id="bookingForm">
+                <!-- Booking Form -->
+        <form class="booking-form" name="submit-to-google-sheet">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" placeholder="Enter your name" required>
+                <input type="text" name="Name" placeholder="Enter your name" required>
             </div>
 
             <div class="form-group">
                 <label>Phone</label>
-                <input type="tel" placeholder="Enter your phone number" required>
+                <input type="tel" name="Phone" placeholder="Enter your phone number" required>
             </div>
 
             <div class="form-group">
                 <label>Service</label>
-                <select required>
+                <select name="Service" required>
                     <option value="" disabled selected>Select a service</option>
-                    <option value="eyelashing">Eyelashing</option>
-                    <option value="eyebrows">Eyebrow Painting</option>
-                    <option value="manicure">Manicure</option>
-                    <option value="pedicure">Pedicure</option>
+                    <option value="Eyelashing">Eyelashing</option>
+                    <option value="Eyebrows">Eyebrow Painting</option>
+                    <option value="Manicure">Manicure</option>
+                    <option value="Pedicure">Pedicure</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Transaction Code</label>
-                <input type="text" placeholder="Enter M-Pesa/Airtel confirmation code" required>
+                <input type="text" name="Transaction Code" placeholder="Enter M-Pesa/Airtel confirmation code" required>
             </div>
 
             <button type="submit">Submit Booking</button>
+            <p id="msg" style="text-align:center; margin-top:10px; color:#6a1b9a; font-weight:bold;"></p>
         </form>
     </main>
 
-    <script>
-        // Simple script to handle form submission
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you! Your booking request has been received. We will confirm via WhatsApp shortly.');
-            this.reset();
-        });
+       <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyFP57wMBm34vgKcFLeSyl0enNvWoU7H5_pHGQPYpWrOAfV9S646L0KyshLa_2lM65ZMw/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const msg = document.getElementById("msg")
+
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          msg.innerHTML = " Sending booking..."
+          
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                msg.innerHTML = "✅ Booking Confirmed! We'll contact you soon."
+                form.reset()
+                setTimeout(() => msg.innerHTML = "", 5000)
+            })
+            .catch(error => {
+                msg.innerHTML = "❌ Error! Please try again or WhatsApp us."
+                console.error('Error!', error.message)
+            })
+        })
     </script>
 </body>
 </html>
