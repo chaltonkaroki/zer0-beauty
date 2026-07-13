@@ -2,8 +2,15 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { 
     font-family: 'Lato', sans-serif; 
-    background-color: #fdfbf7; /* Soft cream background */
+    background-color: #fdfbf7;
+    /* Soft geometric polka-dot pattern using brand colors */
+    background-image: 
+        radial-gradient(#e0c3fc 1px, transparent 1px),
+        radial-gradient(#ff9a9e 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
     color: #333;
+    min-height: 100vh;
 }
 
 /* Hero Section - Pink & Violet Gradient */
@@ -133,7 +140,7 @@ body {
     font-style: italic;
 }
 
-/* --- NEW: Waiting List Card --- */
+/* Waiting List Card */
 .queue-list-card {
     background: white;
     border-radius: 12px;
@@ -188,7 +195,6 @@ body {
     font-style: italic;
     padding: 15px 0;
 }
-/* ---------------------------------- */
 
 /* Form Styling */
 .booking-form {
